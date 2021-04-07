@@ -1,0 +1,80 @@
+CREATE DATABASE StudentManagementSystem;
+
+USE StudentManagementSystem;
+
+CREATE TABLE Admin(
+	aid INT(6) NOT NULL auto_increment primary key,
+	name VARCHAR(30),
+	username VARCHAR(30),
+	password VARCHAR(30)
+);
+
+CREATE TABLE Student(
+	sid INT(6) NOT NULL auto_increment primary key,
+	fname VARCHAR(30),
+	lname VARCHAR(30),
+	address VARCHAR(50),
+	dob VARCHAR(20),
+	tele INT(11),
+	nic VARCHAR(20)
+);
+
+CREATE TABLE Course(
+	cid INT(6) NOT NULL auto_increment primary key,
+	cname VARCHAR(20),
+	amount INT(6)
+);
+
+CREATE TABLE Registration(
+	regid INT(6) NOT NULL auto_increment primary key,
+	date VARCHAR(20),
+	sid INT(6),
+	cid INT(6),
+	CONSTRAINT FOREIGN KEY(sid) REFERENCES Student(sid) ON Delete Cascade On update cascade,
+	CONSTRAINT FOREIGN KEY(cid) REFERENCES Course(cid) ON Delete Cascade On update cascade
+);
+
+CREATE TABLE Payment(
+	pid INT(6) NOT NULL auto_increment primary key,
+	amount INT(6),
+	regid INT(6),	
+	CONSTRAINT FOREIGN KEY(regid) REFERENCES Registration(regid) ON Delete Cascade On update cascade
+);
+
+CREATE TABLE Teacher(
+	tid INT(6) NOT NULL auto_increment primary key,
+	fname VARCHAR(30),
+	lname VARCHAR(30),
+	address VARCHAR(50),
+	dob VARCHAR(20),
+	tele INT(11),
+	nic VARCHAR(20),
+	cid INT(6),
+	CONSTRAINT FOREIGN KEY(cid) REFERENCES Course(cid) ON Delete Cascade On update cascade
+);
+
+insert into Admin(name,username,password)values
+('Isurika','Isurika','Isurika'),
+('Malaka','Malaka','Malaka'),
+('Hiruni','Hiruni','Hiruni'),
+('Asini','Asini','Asini');
+
+insert into Student(fname,lname,address,dob,tele,nic)values
+('Kamal','Perera','No.29,Galle','2000-12-03','077226555','201345609v'),
+('Nimal','Silva','No.20,Panadura','2000-02-01','0772662662','201345609v');
+
+insert into Course(cname,amount) values
+('English',10000),
+('Tamil',12000);
+
+insert into Registration(date,sid,cid) values
+('2020-05-20',1,2),
+('2020-05-23',2,1);
+
+insert into Payment(amount,regid) values
+(12000,1),
+(10000,2);
+
+insert into Teacher(fname,lname,address,dob,tele,nic,cid) values
+('Kasun','Perera','No.19,Galle','1990-12-03','077006555','901345609v',1),
+('Lakshika','Silva','No.2,Panadura','1989-02-01','0772623662','891345609v',2);
